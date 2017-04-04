@@ -1,3 +1,2 @@
 # Hackerrank_Ex
-Exercises
- in C++
+My Solutions in C++
