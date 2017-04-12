@@ -17,7 +17,6 @@ struct Node {
     vector<int> overallChildrenNum;
 };
 
-
 class tree{
     
 public:
@@ -48,7 +47,6 @@ public:
         return;
     }
     
-    
     int countNumbChildren(Node *myNode, int cont){
         
         if(myNode->children.size()==0)
@@ -68,10 +66,8 @@ public:
             else
                 myNode->overallChildrenNum[i] = cont;
         }
-        
         return cont;
     }
-    
     
     bool isLeaf(Node myNode){
         if(myNode.children.size() == 0)
@@ -91,8 +87,6 @@ public:
         return;
     }
 };
-
-
 
 
 int main(){
