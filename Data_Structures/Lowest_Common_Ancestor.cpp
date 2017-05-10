@@ -1,14 +1,54 @@
 #include <iostream>
 using namespace std;
 
-typedef struct NODE {
+struct NODE {
     
     int data;
     NODE *left;
     NODE *right;
-}node;
+};
 
-node * lca(node * root, int v1,int v2)
+struct NODE* insertNode(struct NODE* root, int x){
+    
+    struct NODE* myNode = new(struct NODE);
+    myNode->data = x;
+    myNode->left = NULL;
+    myNode->right = NULL;
+    
+    if(root==NULL){
+        root = myNode;
+        return root;
+    }
+    else {
+        struct NODE* ptr=root;
+        struct NODE* ptr2=NULL;
+        
+        while(ptr!=NULL) {
+            if (myNode->data > ptr->data){
+                ptr2=ptr;
+                ptr = ptr->right;
+            }
+            else{
+                ptr2=ptr;
+                ptr = ptr->left;
+            }
+        }
+        
+        if(ptr2->data > myNode->data)
+            ptr2->left = myNode;
+        else
+            ptr2->right = myNode;
+    }
+    
+    
+    
+    return root;
+}
+
+
+
+
+struct NODE * lca(struct NODE* root, int v1,int v2)
 {
     
     int max = (v1>v2) ? v1 : v2;
@@ -21,7 +61,7 @@ node * lca(node * root, int v1,int v2)
         return root;
     
     
-    node *ptr1 = root;
+    struct NODE* ptr1 = root;
     while(ptr1->data!=v1){
         
         if(ptr1->data > v1)
@@ -33,7 +73,7 @@ node * lca(node * root, int v1,int v2)
             return ptr1;
     }
     
-    node *ptr2 = root;
+    struct NODE* ptr2 = root;
     while(ptr2->data!=v2){
         
         if(ptr2->data > v2)
@@ -45,7 +85,7 @@ node * lca(node * root, int v1,int v2)
             return ptr2;
     }
     
-    node *ptr = root;
+    struct NODE* ptr = root;
     
     while(true){
         
@@ -61,93 +101,34 @@ node * lca(node * root, int v1,int v2)
     return NULL;
 }
 
-
+void printTreeInOrder(struct NODE* ptr){
+    if(ptr!=NULL){
+        printTreeInOrder(ptr->left);
+        cout << ptr->data << endl;
+        printTreeInOrder(ptr->right);
+    }
+}
 
 
 int main() {
+    
+    struct NODE* root=NULL;
+    
+    root = insertNode(root, 5);
+    root = insertNode(root, 3);
+    root = insertNode(root, 8);
+    root = insertNode(root, 0);
+    root = insertNode(root, 4);
+    root = insertNode(root, 7);
+    root = insertNode(root, 8);
+    root = insertNode(root, 10);
 
-    //manually construct the tree
+    //printTreeInOrder(root);
     
-    node *newNode3 = new(node);
-    newNode3->data = 3;
-    
-    node *newNode4 = new(node);
-    newNode4->data = 4;
-    
-    node *newNode5 = new(node);
-    newNode5->data = 5;
-    
-    node *newNode6 = new(node);
-    newNode6->data = 6;
-    
-    node *newNode8 = new(node);
-    newNode8->data = 8;
-
-    node *newNode9 = new(node);
-    newNode9->data = 9;
-    
-    node *newNode10 = new(node);
-    newNode10->data = 10;
-    
-    node *newNode13 = new(node);
-    newNode13->data = 13;
-    
-    node *newNode15 = new(node);
-    newNode15->data = 15;
-    
-    node *newNode17 = new(node);
-    newNode17->data = 17;
-    
-    node *newNode18 = new(node);
-    newNode18->data = 18;
-    
-    node *newNode20 = new(node);
-    newNode20->data = 20;
-    
-    
-    
-    node *root=newNode9;
-    
-    newNode9->left = newNode5;
-    newNode9->right = newNode15;
-    
-    newNode5->left = newNode3;
-    newNode5->right = newNode6;
-    
-    newNode3->left = NULL;
-    newNode3->right = newNode4;
-    
-    newNode4->left = NULL;
-    newNode4->right = NULL;
-    
-    newNode6->left = NULL;
-    newNode6->right = newNode8;
-    
-    newNode8->left = NULL;
-    newNode8->right = NULL;
-    
-    newNode15->left = newNode13;
-    newNode15->right = newNode18;
-    
-    newNode13->left = newNode10;
-    newNode13->right = NULL;
-    
-    newNode10->left = NULL;
-    newNode10->right = NULL;
-    
-    newNode18->left = newNode17;
-    newNode18->right = newNode20;
-    
-    newNode17->left = NULL;
-    newNode17->right = NULL;
-    
-    newNode20->left = NULL;
-    newNode20->right = NULL;
-    
-    node *anc = lca(root, 9, 3);
+    struct NODE* anc = lca(root, 0, 4);
     
     if(anc!=NULL)
-        cout << anc->data << endl;
+        cout << "Ancestor: " << anc->data << endl;
     else
         cout << "Error" << endl;
     
