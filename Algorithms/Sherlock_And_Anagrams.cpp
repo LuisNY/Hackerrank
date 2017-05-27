@@ -48,13 +48,9 @@ int main() {
     cin >> T;
     
     for(int i=0; i<T; i++){
-        
         string myStr;
-        
-        cin >> myStr;
-        
+        cin >> myStr;        
         checkAnagrams(myStr);
-    }    
-    
+    }   
     return 0;
 }
